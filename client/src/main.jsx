@@ -6,19 +6,18 @@ import { store } from './app/store.js'
 import { Provider } from 'react-redux'
 import { ClerkProvider } from '@clerk/react'
 
-// Import your Publishable Key
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
 
 if (!PUBLISHABLE_KEY) {
-throw new Error('Missing Publishable Key')
+  throw new Error('Missing Publishable Key')
 }
 
 createRoot(document.getElementById('root')).render(
+  <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
     <BrowserRouter>
-     <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
-       <Provider store={store}>
-       <App />
+      <Provider store={store}>
+        <App />
       </Provider>
-     </ClerkProvider>
-    </BrowserRouter>,
+    </BrowserRouter>
+  </ClerkProvider>
 )
