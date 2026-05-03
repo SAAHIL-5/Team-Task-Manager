@@ -6,7 +6,7 @@ import Projects from "./pages/Projects";
 import Team from "./pages/Team";
 import ProjectDetails from "./pages/ProjectDetails";
 import TaskDetails from "./pages/TaskDetails";
-import { useUser } from "@clerk/react";
+import { useUser } from "@clerk/clerk-react";
 
 const App = () => {
   const { isLoaded } = useUser();
