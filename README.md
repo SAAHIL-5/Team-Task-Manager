@@ -41,11 +41,13 @@ npm install
 Then, run the development server:
 
 ```bash
-npm run dev
-for client
-and, 
-npm start
+
+use npm run dev
+for client 
+
+use npm start
 for server
+
 ```
 
 Open (https://team-task-manager-production-4ba6.up.railway.app) with your browser to see the result.
