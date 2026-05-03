@@ -6,22 +6,30 @@ import Projects from "./pages/Projects";
 import Team from "./pages/Team";
 import ProjectDetails from "./pages/ProjectDetails";
 import TaskDetails from "./pages/TaskDetails";
+import { useUser } from "@clerk/react";
 
 const App = () => {
-    return (
-        <>
-            <Toaster />
-            <Routes>
-                <Route path="/" element={<Layout />}>
-                    <Route index element={<Dashboard />} />
-                    <Route path="team" element={<Team />} />
-                    <Route path="projects" element={<Projects />} />
-                    <Route path="projectsDetail" element={<ProjectDetails />} />
-                    <Route path="taskDetails" element={<TaskDetails />} />
-                </Route>
-            </Routes>
-        </>
-    );
+  const { isLoaded } = useUser();
+
+  // ⛔ prevent rendering before Clerk is ready
+  if (!isLoaded) {
+    return <div>Loading...</div>;
+  }
+
+  return (
+    <>
+      <Toaster />
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Dashboard />} />
+          <Route path="team" element={<Team />} />
+          <Route path="projects" element={<Projects />} />
+          <Route path="projectsDetail" element={<ProjectDetails />} />
+          <Route path="taskDetails" element={<TaskDetails />} />
+        </Route>
+      </Routes>
+    </>
+  );
 };
 
 export default App;
