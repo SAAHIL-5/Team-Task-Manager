@@ -1,32 +1,47 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    theme: "light",
+  theme: "light",
+};
+
+const applyThemeToDOM = (theme) => {
+  if (theme === "dark") {
+    document.documentElement.classList.add("dark");
+  } else {
+    document.documentElement.classList.remove("dark");
+  }
 };
 
 const themeSlice = createSlice({
-    name: "theme",
-    initialState,
-    reducers: {
-        toggleTheme: (state) => {
-            const theme = state.theme === "light" ? "dark" : "light";
-            localStorage.setItem("theme", theme);
-            document.documentElement.classList.toggle("dark");
-            state.theme = theme;
-        },
-        setTheme: (state, action) => {
-            state.theme = action.payload;
-        },
-        loadTheme: (state) => {
-            const theme = localStorage.getItem("theme");
-            if (theme) {
-                state.theme = theme;
-                if (theme === "dark") {
-                    document.documentElement.classList.add("dark");
-                }
-            }
-        },
+  name: "theme",
+  initialState,
+  reducers: {
+    toggleTheme: (state) => {
+      const newTheme = state.theme === "light" ? "dark" : "light";
+
+      state.theme = newTheme;
+      localStorage.setItem("theme", newTheme);
+
+      applyThemeToDOM(newTheme);
     },
+
+    setTheme: (state, action) => {
+      const theme = action.payload;
+
+      state.theme = theme;
+      localStorage.setItem("theme", theme);
+
+      applyThemeToDOM(theme);
+    },
+
+    loadTheme: (state) => {
+      const savedTheme = localStorage.getItem("theme") || "light";
+
+      state.theme = savedTheme;
+
+      applyThemeToDOM(savedTheme);
+    },
+  },
 });
 
 export const { toggleTheme, setTheme, loadTheme } = themeSlice.actions;
